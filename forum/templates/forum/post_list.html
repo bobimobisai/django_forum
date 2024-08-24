@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forum - Latest Posts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .post {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .post a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .pagination {
+            margin-top: 20px;
+        }
+        .pagination a {
+            text-decoration: none;
+            padding: 8px 12px;
+            margin: 2px;
+            border: 1px solid #007bff;
+            color: #007bff;
+            border-radius: 5px;
+        }
+        .pagination .current {
+            font-weight: bold;
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Latest Posts</h1>
+
+    <div class="post-list">
+        {% for post in posts %}
+        <div class="post">
+            <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+            <p>{{ post.description|truncatewords:20 }}</p>
+        </div>
+        {% empty %}
+        <p>No posts available.</p>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+        {% if posts.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ posts.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="current-page">{{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">Next</a>
+            <a href="?page={{ posts.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'post_create' %}" class="button">Create a new post</a>
+</body>
+</html>

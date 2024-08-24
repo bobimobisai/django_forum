@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .post {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .comment {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .comment-form {
+            margin-top: 30px;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <div class="post">
+        <p>{{ post.description }}</p>
+        <small>Posted on {{ post.created_at }}</small>
+    </div>
+
+    <h2>Comments</h2>
+    <div class="comments">
+        {% for comment in post.post_comments.all %}
+        <div class="comment">
+            <p>{{ comment.content }}</p>
+            <small>Posted on {{ comment.created_at }}</small>
+        </div>
+        {% empty %}
+        <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+
+    <div class="comment-form">
+        <h2>Add a Comment</h2>
+        <form method="post">
+            {% csrf_token %}
+            <textarea name="content" rows="4" placeholder="Write your comment..."></textarea><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <a href="{% url 'post_list' %}">Back to posts</a>
+</body>
+</html>
