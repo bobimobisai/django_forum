@@ -1,17 +1,36 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Posts, Comment
-from django.core.paginator import Paginator
 from .forms import PostForm, CommentForm
+import logging
+
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 def post_list(request):
-    post_list = Posts.objects.all().order_by("-created_at")
-    paginator = Paginator(post_list, 10)
+    pg_max = 10 
+    count_obj = Posts.objects.count()
+    logging.info(f"COUNT OBJ: {count_obj}")
 
-    page_number = request.GET.get("page")
-    posts = paginator.get_page(page_number)
+    page_number = int(request.GET.get("page", 1))
 
-    return render(request, "forum/post_list.html", {"posts": posts})
+    offset = (page_number - 1) * pg_max
+
+    post_list = Posts.objects.order_by("-created_at")[offset : offset + pg_max]
+    logging.info(f"LST - {post_list}")
+    total_pages = (count_obj + pg_max - 1) // pg_max
+
+    logging.info(f"DB LIST POSTS: {post_list.query}")
+
+    return render(
+        request,
+        "forum/post_list.html",
+        {
+            "posts": post_list,
+            "current_page": page_number,
+            "total_pages": total_pages,
+        },
+    )
 
 
 def post_detail(request, post_id):

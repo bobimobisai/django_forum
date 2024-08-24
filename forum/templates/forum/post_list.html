@@ -6,6 +6,10 @@
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
+            background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('https://images.wallpapersden.com/image/download/abstract-wave-grey-duotone_bmdmaWmUmZqaraWkpJRmbmdlrWZlbWU.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         h1 {
             color: #333;
@@ -37,6 +41,24 @@
             background-color: #007bff;
             color: white;
         }
+        .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 20px 0;
+        background-color: transparent;
+        color: #007bff; 
+        border: 2px solid #007bff; 
+        border-radius: 5px; 
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.3s, color 0.3s;
+        }
+        .button:hover {
+        background-color: #007bff; 
+        color: white;
+        transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -54,16 +76,16 @@
     </div>
 
     <div class="pagination">
-        {% if posts.has_previous %}
+        {% if current_page > 1 %}
             <a href="?page=1">&laquo; First</a>
-            <a href="?page={{ posts.previous_page_number }}">Previous</a>
+            <a href="?page={{ current_page|add:-1 }}">Previous</a>
         {% endif %}
 
-        <span class="current-page">{{ posts.number }} of {{ posts.paginator.num_pages }}</span>
+        <span class="current-page">{{ current_page }} of {{ total_pages }}</span>
 
-        {% if posts.has_next %}
-            <a href="?page={{ posts.next_page_number }}">Next</a>
-            <a href="?page={{ posts.paginator.num_pages }}">Last &raquo;</a>
+        {% if current_page < total_pages %}
+            <a href="?page={{ current_page|add:1 }}">Next</a>
+            <a href="?page={{ total_pages }}">&raquo; Last</a>
         {% endif %}
     </div>
 

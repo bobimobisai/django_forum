@@ -1,43 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ post.title }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
+            background-color: #f8f9fa; /* Светлый фон */
         }
-        h1 {
+        h1, h2 {
             color: #333;
         }
-        .post {
-            margin-bottom: 20px;
+        .post-title {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .post-description {
+            margin-bottom: 10px;
             padding: 10px;
+            background-color: white;
             border: 1px solid #ddd;
             border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .post-date {
+            font-size: 0.9em;
+            color: #777;
+            margin-top: 10px;
         }
         .comment {
             margin-top: 20px;
             padding: 10px;
+            background-color: #f1f1f1;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
+        .comments {
+            margin-top: 20px;
+        }
         .comment-form {
             margin-top: 30px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .comment-form textarea {
             width: 100%;
             padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        .comment-form textarea:focus {
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #218838; 
+            transform: scale(1.05); 
+        }
+        .back-link {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 20px 0;
+        background-color: transparent;
+        color: #007bff; 
+        border: 2px solid #007bff; 
+        border-radius: 5px; 
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.3s, color 0.3s;
+        }
+        .back-link:hover {
+        background-color: #007bff; 
+        color: white;
+        transform: scale(1.05);
         }
     </style>
 </head>
 <body>
-    <h1>{{ post.title }}</h1>
-    <div class="post">
+    <h1 class="post-title">{{ post.title }}</h1>
+    
+    <div class="post-description">
         <p>{{ post.description }}</p>
-        <small>Posted on {{ post.created_at }}</small>
     </div>
-
+    
+    <small class="post-date">Posted on {{ post.created_at }}</small>
+    
     <h2>Comments</h2>
     <div class="comments">
         {% for comment in post.post_comments.all %}
@@ -55,10 +123,10 @@
         <form method="post">
             {% csrf_token %}
             <textarea name="content" rows="4" placeholder="Write your comment..."></textarea><br>
-            <button type="submit">Submit</button>
+            <button type="submit" class="button">Submit</button>
         </form>
     </div>
 
-    <a href="{% url 'post_list' %}">Back to posts</a>
+    <a href="{% url 'post_list' %}" class="back-link">Back to posts</a>
 </body>
 </html>
