@@ -21,10 +21,10 @@ services:
     container_name: django_forum
     restart: always
     ports:
-      - "8000:8000"
+      - "8020:8020"
     environment:
       - DJANGO_SETTINGS_MODULE=project_forum.settings
       - DATABASE_URL=postgres://ivan:mini_app_1712@db:5432/mini_app_db
     command: >
       sh -c "python manage.py migrate &&
-             gunicorn --bind 0.0.0.0:8000 project_forum.wsgi:application"
+             gunicorn --bind 0.0.0.0:8020 project_forum.wsgi:application"
