@@ -77,11 +77,11 @@ WSGI_APPLICATION = "project_forum.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "db_forum_project",
-        "USER": "ilya",
-        "PASSWORD": "forum_1412",
-        "HOST": "176.123.166.85",
-        "PORT": "8289",
+        "NAME": "mini_app_db",
+        "USER": "ivan",
+        "PASSWORD": "mini_app_1712",
+        "HOST": "db",
+        "PORT": "5432",
     }
 }
 
